@@ -1,0 +1,14 @@
+services:
+  webapp:
+    image: parthitk/d2k:5
+    ports: 
+    - 8080:5000
+    networks:
+      - guvi
+    secrets:
+      - docker_credentials
+networks:
+  guvi:
+secrets:
+  docker_credentials:
+    file: ./secret.txt
