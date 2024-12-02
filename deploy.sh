@@ -3,6 +3,10 @@
 # Load secrets from the file
 source ./secret.txt
 
+DOCKER_HUB_IMAGE=$1
+
+echo "${DOCKER_IMAGE}" > .env
+
 # Login to Docker Hub using the credentials
 echo "$PASSWORD" | docker login -u "$USERNAME" --password-stdin
 
@@ -20,4 +24,4 @@ cd "$dockerCompose_dir" || exit
 echo "Dockercompose found in: $(pwd)"
 
 # Start the Docker Compose services
-docker-compose up -d
+docker-compose --env-file .env up -d
