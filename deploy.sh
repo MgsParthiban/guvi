@@ -1,15 +1,14 @@
 #!/bin/bash
 
 # Load secrets from the file
-source ./secret.txt
+# source ./secret.txt
 
-DOCKER_HUB_IMAGE=$1
 
 
 # Login to Docker Hub using the credentials
-#echo "$PASSWORD" | docker login -u "$USERNAME" --password-stdin
+# echo "$PASSWORD" | docker login -u "$USERNAME" --password-stdin
 
-#Image_name=read -p "Enter the image name:"
+# Image_name=read -p "Enter the image name:"
 # Find the Dockerfile in subdirectories
 dockerCompose_path=$(find . -type f -name "docker-compose.yml")
 
