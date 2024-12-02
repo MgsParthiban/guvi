@@ -20,7 +20,7 @@ cd "$dockerfile_dir" || exit
 echo "Dockerfile found in: $(pwd)"
 
 # Execute the docker build command
-docker build -t $image_tag.
+docker build -t $image_tag .
 
 echo "Docker image built with tag: $image_tag"
 
