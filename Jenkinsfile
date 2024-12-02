@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('docekr-hub') // Corrected credentials ID
+        IMAGE_NAME = "mydev"
         DOCKER_IMAGE_NAME = "parthitk/task" // Unique tag with Jenkins build number
         DOCKER_TAG = "${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}"
         DOCKER_HUB_IMAGE = "parthitk/task:1"
@@ -24,7 +25,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', "docekr-hub") {
-                        sh "docker tag  ${DOCKER_TAG} "
+                        sh "docker tag  ${IMAGE_NAME}:${BUILD_NUMBER} ${DOCKER_TAG} "
                         sh "docker push ${DOCKER_TAG}"
                     }
                 }
