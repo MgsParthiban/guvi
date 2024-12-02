@@ -3,7 +3,7 @@ pipeline {
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('docekr-hub')
         BUILD_NUMBER = "${env.BUILD_NUMBER}" // Provided automatically by Jenkins
-        IMAGE_NAME=Myapp
+        IMAGE_NAME=myapp
     }
     stages {
         stage('Build Docker Image') {
@@ -23,7 +23,7 @@ pipeline {
         stage ('Image pushing') {
             steps {
                 // This step should not normally be used in your script. Consult the inline help for details.
-                docker.withDockerRegistry(credentialsId: 'docekr-hub', url: 'https://hub.docker.com/repositories/parthitk') {
+                docker.withRegistry('https://index.docker.io/v1/', "docekr-hub") {
                 docker.image ("${IMAGE_NAME}").push()
                 }
             }
