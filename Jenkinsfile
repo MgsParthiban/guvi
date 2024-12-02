@@ -20,6 +20,8 @@ pipeline {
         stage('deploy Docker Image') {
             steps {
                 script {
+                    docker.withRegistry('https://index.docker.io/v1/', "docker-hub") {
+                    }
                     sh 'chmod +x deploy.sh'
                     sh './deploy.sh'
                 }
