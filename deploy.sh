@@ -5,7 +5,7 @@ source ./secret.txt
 
 DOCKER_HUB_IMAGE=$1
 
-echo "${DOCKER_IMAGE}" > .env
+echo "${DOCKER_HUB_IMAGE}" > .env
 
 # Login to Docker Hub using the credentials
 echo "$PASSWORD" | docker login -u "$USERNAME" --password-stdin
