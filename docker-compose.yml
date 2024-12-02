@@ -1,8 +1,8 @@
 services:
   webapp:
-    image: parthitk/d2k:latest
+    image: "${DOCKER_IMAGE}"
     ports: 
-    - 80:80
+    - 1010:80
     networks:
       - guvi
     secrets:
