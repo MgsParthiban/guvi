@@ -5,6 +5,11 @@ pipeline {
         BUILD_NUMBER = "${env.BUILD_NUMBER}" // Provided automatically by Jenkins
     }
     stages {
+        stage('Clone Code') {
+            steps {
+                echo "scm checkout"
+            }
+        }
         stage('Build Docker Image') {
             steps {
                 sh '''
