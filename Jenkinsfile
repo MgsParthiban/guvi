@@ -3,7 +3,7 @@ pipeline {
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('docekr-hub') // Corrected credentials ID
         IMAGE_NAME = "myapp"
-        DOCKER_IMAGE_NAME = "parthi/d2k" // Unique tag with Jenkins build number
+        DOCKER_IMAGE_NAME = "parthitk/d2k" // Unique tag with Jenkins build number
         DOCKER_TAG = "${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}"
     }
     stages {
