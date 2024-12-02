@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('docekr-hub') // Corrected credentials ID
-        #IMAGE_NAME = "devapp"
+        # IMAGE_NAME = "devapp"
         DOCKER_IMAGE_NAME = "parthitk/task" // Unique tag with Jenkins build number
         DOCKER_TAG = "${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}"
         DOCKER_HUB_IMAGE = "parthitk/task:1"
