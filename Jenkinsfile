@@ -33,10 +33,9 @@ pipeline {
         stage('deploy Docker Image') {
             steps {
                 script {
-                    docker.withRegistry('https://index.docker.io/v1/', "docekr-hub") {
-                        sh 'chmod +x deploy.sh'
-                        sh './deploy.sh ${DOCKER_HUB_IMAGE}'
-                    }
+                     sh 'chmod +x deploy.sh'
+                     sh './deploy.sh ${DOCKER_HUB_IMAGE}'
+                   # docker.withRegistry('https://index.docker.io/v1/', "docekr-hub") {                    }
                 }
             }
         }
