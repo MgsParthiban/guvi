@@ -5,7 +5,7 @@ pipeline {
         IMAGE_NAME = "mydev"
         DOCKER_IMAGE_NAME = "parthitk/task" // Unique tag with Jenkins build number
         DOCKER_TAG = "${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}"
-        DOCKER_HUB_IMAGE = "parthitk/task:1"
+        DOCKER_HUB_IMAGE = "parthitk/task:6"
     }
     stages {
         stage('Build Docker Image') {
