@@ -4,6 +4,7 @@ pipeline {
         DOCKER_HUB_CREDENTIALS = credentials('docekr-hub') // Corrected credentials ID
         IMAGE_NAME = "myapp"
         DOCKER_IMAGE_NAME = "parthi/d2k" // Unique tag with Jenkins build number
+        DOCKER_TAG = "${DOCKER_IAMGE_NAME}:${BUILD_NUMBER}"
     }
     stages {
         stage('Build Docker Image') {
@@ -23,7 +24,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', "docekr-hub") {
-                        sh "docker push ${DOCKER_IMAGE_NAME}"
+                        sh "docker push ${DOCKER_TAG}"
                     }
                 }
             }
