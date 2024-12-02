@@ -1,6 +1,12 @@
 #!/bin/bash
 
-Image_name=read -p "Enter the image name:"
+image_name=$1
+
+build_number=${BUILD_NUMBER:-"latest"}
+
+image_tag="$image_name:$build_number"
+
+
 # Find the Dockerfile in subdirectories
 dockerfile_path=$(find . -type f -name "Dockerfile")
 
@@ -14,5 +20,6 @@ cd "$dockerfile_dir" || exit
 echo "Dockerfile found in: $(pwd)"
 
 # Execute the docker build command
-docker build -t my-docker-image .
+docker build -t $image_tag .
 
+echo "Docker image built with tag: $image_tag"
