@@ -24,6 +24,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', "docekr-hub") {
+                        sh "docker tag  ${DOCKER_TAG} "
                         sh "docker push ${DOCKER_TAG}"
                     }
                 }
