@@ -16,7 +16,7 @@ pipeline {
                     chmod +x build.sh
                     
                     # Call the build.sh script with the image name
-                    ./build.sh "${DOCKER_IMAGE_NAME}"
+                    ./build.sh "${IMAGE_NAME}"
                     '''
                 }
             }
