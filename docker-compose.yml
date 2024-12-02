@@ -1,6 +1,6 @@
 services:
   webapp:
-    image: "${DOCKER_IMAGE}"
+    image: "${DOCKER_HUB_IMAGE}"
     ports: 
     - 1010:80
     networks:
