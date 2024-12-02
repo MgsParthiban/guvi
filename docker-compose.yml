@@ -1,8 +1,8 @@
 services:
   webapp:
-    image: parthitk/d2k:5
+    image: parthitk/d2k:latest
     ports: 
-    - 8080:5000
+    - 80:80
     networks:
       - guvi
     secrets:
