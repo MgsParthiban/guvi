@@ -14,7 +14,7 @@ pipeline {
             steps {
                 sh '''
                 # Define the image name
-                IMAGE_NAME=Myapp
+                IMAGE_NAME=myapp
                 
                 # Provide the execute permission
                 chmod +x build.sh
