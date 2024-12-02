@@ -1,31 +1,30 @@
 pipeline {
     agent any
     environment {
-        DOCKER_HUB_CREDENTIALS = credentials('docekr-hub')
-        BUILD_NUMBER = "${env.BUILD_NUMBER}" // Provided automatically by Jenkins
+        DOCKER_HUB_CREDENTIALS = credentials('docker-hub') // Corrected credentials ID
         IMAGE_NAME = "myapp"
-         DOCKER_IMAGE_NAME = 'parthi/d2k:${IMAGE_NAME}'
+        DOCKER_IMAGE_NAME = "parthi/d2k:${env.BUILD_NUMBER}" // Unique tag with Jenkins build number
     }
     stages {
         stage('Build Docker Image') {
             steps {
-                sh '''
-                # Define the image name
-               
-                
-                # Provide the execute permission
-                chmod +x build.sh
-
-                # Call the build.sh script with the image name
-                ./build.sh $IMAGE_NAME
-                '''
+                script {
+                    sh '''
+                    # Provide the execute permission to the build script
+                    chmod +x build.sh
+                    
+                    # Call the build.sh script with the image name
+                    ./build.sh "${DOCKER_IMAGE_NAME}"
+                    '''
+                }
             }
         }
-        stage ('Image pushing') {
+        stage('Push Docker Image') {
             steps {
-                // This step should not normally be used in your script. Consult the inline help for details.
-                docker.withRegistry('https://index.docker.io/v1/', "docekr-hub") {
-                    docker.image ("${DOCKER_IMAGE_NAME}").push()
+                script {
+                    docker.withRegistry('https://index.docker.io/v1/', DOCKER_HUB_CREDENTIALS) {
+                        sh "docker push ${DOCKER_IMAGE_NAME}"
+                    }
                 }
             }
         }
