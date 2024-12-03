@@ -47,7 +47,8 @@ pipeline {
                     // Use `sshagent` to access the stored SSH key securely
                     sshagent(['SSH_KEY']) {
                         sh """
-                            scp -o StrictHostKeyChecking=no deploy.sh .env ubuntu@${ec2Ip}:~/
+                            scp -o StrictHostKeyChecking=no deploy.sh ubuntu@${ec2Ip}:~/deploy.sh
+                            scp -o StrictHostKeyChecking=no .env ubuntu@${ec2Ip}:~/.env
                             ssh -o StrictHostKeyChecking=no ubuntu@${ec2Ip} '
                                 ls -l ~/
                                 chmod +x ~/deploy.sh
