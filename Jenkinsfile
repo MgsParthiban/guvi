@@ -49,6 +49,7 @@ pipeline {
                         sh """
                             scp -o StrictHostKeyChecking=no deploy.sh ubuntu@${ec2Ip}:~/deploy.sh
                             scp -o StrictHostKeyChecking=no .env ubuntu@${ec2Ip}:~/.env
+                            scp -o StrictHostKeyChecking=no docker-compose.yml ubuntu@${ec2Ip}:~/docker-compose.yml
                             ssh -o StrictHostKeyChecking=no ubuntu@${ec2Ip} '
                                 ls -l ~/
                                 chmod +x ~/deploy.sh
