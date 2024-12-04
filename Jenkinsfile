@@ -44,15 +44,17 @@ pipeline {
             steps {
                 script {
                     echo "Deploying to UAT environment on EC2 instance..."
+                    
                     def ec2Ip = (params.ENVIRONMENT == 'Prod') ? env.PROD : env.UAT 
                     // Use `sshagent` to access the stored SSH key securely
                     sshagent(['SSH_KEY']) {
                         sh """
+                            scp -o StrictHostKeyChecking=no deploy.sh .env ubuntu@${ec2Ip}:~/
                             ssh -o StrictHostKeyChecking=no ubuntu@${ec2Ip} '
-                                chmod +x deploy.sh
-                                ./deploy.sh ${DOCKER_HUB_IMAGE}
-                                
-                            '
+                                ls -l ~/
+                                chmod +x ~/deploy.sh
+                                ~/deploy.sh ${DOCKER_HUB_IMAGE}
+                            '    
                         """
                     }
                 }
