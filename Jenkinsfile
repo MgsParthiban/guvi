@@ -9,6 +9,9 @@ pipeline {
         SSH_KEY = credentials('SSH_KEY') 
     }
     stages {
+        when {
+                branch 'main'
+            }
         stage('Clone Code') {
             steps {
                 echo "scm checkout"
