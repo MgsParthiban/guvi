@@ -5,7 +5,7 @@ pipeline {
         IMAGE_NAME = "mydev"
         DOCKER_IMAGE_NAME = "parthitk/task" // Unique tag with Jenkins build number
         DOCKER_TAG = "${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}"
-        DOCKER_HUB_IMAGE = "parthitk/task:6"
+        DOCKER_HUB_IMAGE = "parthitk/d2k:19"
         SSH_KEY = credentials('SSH_KEY') 
     }
     parameters {
@@ -49,12 +49,11 @@ pipeline {
                     // Use `sshagent` to access the stored SSH key securely
                     sshagent(['SSH_KEY']) {
                         sh """
-                            scp -o StrictHostKeyChecking=no deploy.sh .env ubuntu@${ec2Ip}:~/
                             ssh -o StrictHostKeyChecking=no ubuntu@${ec2Ip} '
-                                ls -l ~/
-                                chmod +x ~/deploy.sh
-                                ~/deploy.sh ${DOCKER_HUB_IMAGE}
-                            '    
+                                chmod +x deploy.sh
+                                ./deploy.sh ${DOCKER_HUB_IMAGE}
+                                
+                            '
                         """
                     }
                 }
