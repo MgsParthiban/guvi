@@ -6,67 +6,25 @@ pipeline {
      
       
         DOCKER_HUB_IMAGE = "parthitk/d2k:19"
-        DEV_REPO = "parthitk/task"
-        PROD_REPO = "parthitk/d2k"
         SSH_KEY = credentials('SSH_KEY') 
     }
     stages {
         stage('Clone Code') {
             steps {
                 echo "scm checkout"
-                script {
-                echo "Building branch: ${env.BRANCH_NAME}"
-                }
             }
         }
         stage('Build Docker Image') {
             steps {
                 script {
-                    def repo = (env.BRANCH_NAME == 'main') ? "${PROD_REPO}" : "${DEV_REPO}"
-                    DOCKER_TAG = "${repo}"
                     sh '''
                     # Provide the execute permission to the build script
                     chmod +x build.sh
                     
                     # Call the build.sh script with the image name
-                    ./build.sh "${DOCKER_TAG}"
-                    echo "THE IMAGE IMAGE NAME IS : ${DOCKER_TAG}"
+                    ./build.sh "${IMAGE_NAME}"
+                    echo "THE IMAGE IMAGE NAME IS : ${ IMAGE_NAME}:${BUILD_NUMBER}"
                     '''
-                }
-            }
-        }
-        stage('Push Docker Image') {
-            steps {
-                script {
-                    // Determine the repository based on the branch
-                    def repo = (env.BRANCH_NAME == 'main') ? "${PROD_REPO}" : "${DEV_REPO}"
-                    DOCKER_TAG = "${repo}:${BUILD_NUMBER}"
-                    docker.withRegistry('https://index.docker.io/v1/', "docker-hub") {
-                        sh "docker push ${DOCKER_TAG}"
-                        echo" image successfully pushed into the docker hub"
-                    }
-                }
-            }
-        }
-        stage('Deploy to UAT') {
-            when {
-                branch 'main'
-            }
-            steps {
-                script {
-                    echo "Deploying to UAT environment on EC2 instance..."
-                    def ec2Ip = env.PROD
-                    // Use `sshagent` to access the stored SSH key securely
-                    sshagent(['SSH_KEY']) {
-                        sh """
-                            scp -o StrictHostKeyChecking=no deploy.sh .env docker-compose.yml secret.txt ubuntu@${ec2Ip}:~/
-                            ssh -o StrictHostKeyChecking=no ubuntu@${ec2Ip} '
-                                echo "${DOCKER_HUB_CREDENTIALS_PSW}" | docker login -u "${DOCKER_HUB_CREDENTIALS_USR}" --password-stdin 
-                                chmod +x deploy.sh
-                                ./deploy.sh ${DOCKER_HUB_IMAGE}   
-                            '
-                        """
-                    }
                 }
             }
         }
