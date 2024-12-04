@@ -2,6 +2,7 @@
 
 image_name=$1
 
+
 build_number=${BUILD_NUMBER:-"latest"}
 
 image_tag="$image_name:$build_number"
@@ -23,3 +24,4 @@ echo "Dockerfile found in: $(pwd)"
 docker build -t $image_tag .
 
 echo "Docker image built with tag: $image_tag"
+                                 
