@@ -14,10 +14,9 @@ pipeline {
         stage('Clone Code') {
             steps {
                 echo "scm checkout"
-            }
-            script {
-            echo "Building branch: ${env.BRANCH_NAME}"
-            }
+                script {
+                echo "Building branch: ${env.BRANCH_NAME}"
+                }
         }
         stage('Build Docker Image') {
             steps {
