@@ -18,17 +18,17 @@ pipeline {
             steps {
                 script {
                     sh '''
-                    docker.withRegistry('https://index.docker.io/v1/', "docker-hub") {
-                    # Provide the execute permission to the build script
-                    chmod +x build.sh
-                    
-                    # Call the build.sh script with the image name
-                    ./build.sh "${DOCKER_HUB_IMAGE}"
-                    echo "THE IMAGE IMAGE NAME IS : ${DOCKER_HUB_IMAGE}:${BUILD_NUMBER}"
-                    '''
+                        docker.withRegistry('https://index.docker.io/v1/', "docker-hub") {
+                            # Provide the execute permission to the build script
+                            chmod +x build.sh
+                            
+                            # Call the build.sh script with the image name
+                            ./build.sh "${DOCKER_HUB_IMAGE}"
+                            echo "THE IMAGE IMAGE NAME IS : ${DOCKER_HUB_IMAGE}:${BUILD_NUMBER}"
+                            }
+                            '''
                     }
                 }
             }
         }
     }
-}
