@@ -2,7 +2,7 @@ services:
   webapp:
     image: "${DOCKER_HUB_IMAGE}"
     ports: 
-    - 1010:80
+    - 80:80
     networks:
       - guvi
     secrets:
