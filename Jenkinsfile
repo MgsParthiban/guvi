@@ -1,13 +1,19 @@
 pipeline {
     agent any
     environment {
-        DOCKER_HUB_CREDENTIALS = credentials('docekr-hub') // Corrected credentials ID
-        IMAGE_NAME = "myapp"
-        DOCKER_IMAGE_NAME = "parthitk/d2k" // Unique tag with Jenkins build number
+        DOCKER_HUB_CREDENTIALS = credentials('docker-hub') // Corrected credentials ID
+        IMAGE_NAME = "mydev"
+        DOCKER_IMAGE_NAME = "parthitk/task" // Unique tag with Jenkins build number
         DOCKER_TAG = "${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}"
-        DOCKER_HUB_IMAGE = "parthitk/d2k:15"
+        DOCKER_HUB_IMAGE = "parthitk/d2k:19"
+        SSH_KEY = credentials('SSH_KEY') 
     }
     stages {
+        stage('Clone Code') {
+            steps {
+                echo "scm checkout"
+            }
+        }
         stage('Build Docker Image') {
             steps {
                 script {
@@ -24,18 +30,31 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    docker.withRegistry('https://index.docker.io/v1/', "docekr-hub") {
+                    docker.withRegistry('https://index.docker.io/v1/', "docker-hub") {
                         sh "docker push ${DOCKER_TAG}"
+                        echo" image successfully pushed into the docker hub"
                     }
                 }
             }
         }
-        stage('deploy Docker Image') {
+        stage('Deploy to UAT') {
+            when {
+                branch 'main'
+            }
             steps {
                 script {
-                    docker.withRegistry('https://index.docker.io/v1/', "docekr-hub") {
-                        sh 'chmod +x deploy.sh'
-                        sh './deploy.sh ${DOCKER_HUB_IMAGE}'
+                    echo "Deploying to UAT environment on EC2 instance..."
+                    def ec2Ip = env.PROD
+                    // Use `sshagent` to access the stored SSH key securely
+                    sshagent(['SSH_KEY']) {
+                        sh """
+                            scp -o StrictHostKeyChecking=no deploy.sh .env docker-compose.yml secret.txt ubuntu@${ec2Ip}:~/
+                            ssh -o StrictHostKeyChecking=no ubuntu@${ec2Ip} '
+                                echo "${DOCKER_HUB_CREDENTIALS_PSW}" | docker login -u "${DOCKER_HUB_CREDENTIALS_USR}" --password-stdin 
+                                chmod +x deploy.sh
+                                ./deploy.sh ${DOCKER_HUB_IMAGE}   
+                            '
+                        """
                     }
                 }
             }
