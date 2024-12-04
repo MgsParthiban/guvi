@@ -26,6 +26,7 @@ pipeline {
                     ./build.sh "${DOCKER_HUB_IMAGE}"
                     echo "THE IMAGE IMAGE NAME IS : ${DOCKER_HUB_IMAGE}:${BUILD_NUMBER}"
                     '''
+                    }
                 }
             }
         }
