@@ -5,7 +5,7 @@ pipeline {
         IMAGE_NAME = "mydev"
      
       
-        DOCKER_HUB_IMAGE = "parthitk/d2k:19"
+        DOCKER_HUB_IMAGE = "parthitk/task"
         SSH_KEY = credentials('SSH_KEY') 
     }
     stages {
