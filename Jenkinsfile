@@ -18,6 +18,7 @@ pipeline {
             steps {
                 script {
                     sh '''
+                    docker.withRegistry('https://index.docker.io/v1/', "docker-hub") {
                     # Provide the execute permission to the build script
                     chmod +x build.sh
                     
