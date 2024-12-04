@@ -38,6 +38,9 @@ pipeline {
             }
         }
         stage('Deploy to UAT') {
+            when {
+                branch 'main'
+            }
             steps {
                 script {
                     echo "Deploying to UAT environment on EC2 instance..."
