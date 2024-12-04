@@ -3,7 +3,7 @@ pipeline {
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub') // Corrected credentials ID
         IMAGE_NAME = "mydev"
-       # DOCKER_IMAGE_NAME = "parthitk/task" // Unique tag with Jenkins build number
+     
       
         DOCKER_HUB_IMAGE = "parthitk/d2k:19"
         DEV_REPO = "parthitk/task"
