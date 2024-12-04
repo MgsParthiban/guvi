@@ -8,9 +8,6 @@ pipeline {
         DOCKER_HUB_IMAGE = "parthitk/d2k:19"
         SSH_KEY = credentials('SSH_KEY') 
     }
-    parameters {
-       choice(name: 'ENVIRONMENT', choices: ['Dev', 'Prod'], description: 'Choose the environment to deploy to')
-    }
     stages {
         stage('Clone Code') {
             steps {
@@ -44,15 +41,14 @@ pipeline {
             steps {
                 script {
                     echo "Deploying to UAT environment on EC2 instance..."
-                    
-                    def ec2Ip = (params.ENVIRONMENT == 'Prod') ? env.PROD : env.UAT 
+                    def ec2Ip = env.PROD
                     // Use `sshagent` to access the stored SSH key securely
                     sshagent(['SSH_KEY']) {
                         sh """
+                            scp -o StrictHostKeyChecking=no deploy.sh .env docker-compose.yml secret.txt ubuntu@${ec2Ip}:~/
                             ssh -o StrictHostKeyChecking=no ubuntu@${ec2Ip} '
                                 chmod +x deploy.sh
-                                ./deploy.sh ${DOCKER_HUB_IMAGE}
-                                
+                                ./deploy.sh ${DOCKER_HUB_IMAGE}   
                             '
                         """
                     }
