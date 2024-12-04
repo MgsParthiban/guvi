@@ -47,6 +47,7 @@ pipeline {
                         sh """
                             scp -o StrictHostKeyChecking=no deploy.sh .env docker-compose.yml secret.txt ubuntu@${ec2Ip}:~/
                             ssh -o StrictHostKeyChecking=no ubuntu@${ec2Ip} '
+                                echo "${DOCKER_HUB_CREDENTIALS_PSW}" | docker login -u "${DOCKER_HUB_CREDENTIALS_USR}"
                                 chmod +x deploy.sh
                                 ./deploy.sh ${DOCKER_HUB_IMAGE}   
                             '
