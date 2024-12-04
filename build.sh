@@ -26,8 +26,6 @@ docker build -t $image_tag .
 
 echo "Docker image built with tag: $image_tag"
 
-docker login
-
 echo "$PASSWORD" | docker login -u "$USERNAME" --password-stdin
 
 docker push $image_tag
