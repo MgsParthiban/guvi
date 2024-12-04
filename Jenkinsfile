@@ -3,9 +3,11 @@ pipeline {
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub') // Corrected credentials ID
         IMAGE_NAME = "mydev"
-        DOCKER_IMAGE_NAME = "parthitk/task" // Unique tag with Jenkins build number
-        DOCKER_TAG = "${DOCKER_IMAGE_NAME}:${BUILD_NUMBER}"
+       # DOCKER_IMAGE_NAME = "parthitk/task" // Unique tag with Jenkins build number
+      
         DOCKER_HUB_IMAGE = "parthitk/d2k:19"
+        DEV_REPO = "parthitk/task"
+        PROD_REPO = "parthitk/d2k"
         SSH_KEY = credentials('SSH_KEY') 
     }
     stages {
@@ -30,6 +32,9 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
+                    // Determine the repository based on the branch
+                    def repo = (env.BRANCH_NAME == 'main') ? "${PROD_REPO}" : "${DEV_REPO}"
+                    DOCKER_TAG = "${repo}:${BUILD_NUMBER}"
                     docker.withRegistry('https://index.docker.io/v1/', "docker-hub") {
                         sh "docker push ${DOCKER_TAG}"
                         echo" image successfully pushed into the docker hub"
