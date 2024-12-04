@@ -1,11 +1,11 @@
 #!/bin/bash
 
-image_name=$1
+DOCKER_TAG=$1
 
 
 build_number=${BUILD_NUMBER:-"latest"}
 
-image_tag="$image_name:$build_number"
+image_tag="$DOCKER_TAG:$build_number"
 
 
 # Find the Dockerfile in subdirectories
