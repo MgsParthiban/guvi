@@ -20,13 +20,13 @@ pipeline {
             steps {
                 script {
                     def repo = (env.BRANCH_NAME == 'main') ? "${PROD_REPO}" : "${DEV_REPO}"
-                    DOCKER_TAG = "${repo}
+                    DOCKER_TAG = "${repo}"
                     sh '''
                     # Provide the execute permission to the build script
                     chmod +x build.sh
                     
                     # Call the build.sh script with the image name
-                    ./build.sh "{$DOCKER_TAG}"
+                    ./build.sh "${DOCKER_TAG}"
                     echo "THE IMAGE IMAGE NAME IS : ${DOCKER_TAG}"
                     '''
                 }
