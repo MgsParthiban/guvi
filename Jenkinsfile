@@ -22,8 +22,8 @@ pipeline {
                     chmod +x build.sh
                     
                     # Call the build.sh script with the image name
-                    ./build.sh "${IMAGE_NAME}"
-                    echo "THE IMAGE IMAGE NAME IS : ${ IMAGE_NAME}:${BUILD_NUMBER}"
+                    ./build.sh "${DOCKER_HUB_IMAGE}"
+                    echo "THE IMAGE IMAGE NAME IS : ${DOCKER_HUB_IMAGE}:${BUILD_NUMBER}"
                     '''
                 }
             }
