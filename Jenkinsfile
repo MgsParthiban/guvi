@@ -17,6 +17,7 @@ pipeline {
                 script {
                 echo "Building branch: ${env.BRANCH_NAME}"
                 }
+            }
         }
         stage('Build Docker Image') {
             steps {
