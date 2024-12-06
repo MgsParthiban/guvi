@@ -3,6 +3,7 @@
 echo "Current directory: $(pwd)" 
 # Source the .env file and check if it loads correctly
 source ./.env
+source ./secret.txt
 
 image_name=$DOCKER_HUB_IMAGE
 
@@ -30,3 +31,7 @@ echo "Docker image built with tag: $image_tag"
 
 sed -i '/^dockerimage=/d' .env
 echo "dockerimage=$image_tag" >> .env
+
+echo "$PASSWORD" | docker login -u "$USERNAME" --password-stdin
+
+docker push $image_tag
