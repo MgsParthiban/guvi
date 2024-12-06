@@ -1,6 +1,6 @@
 services:
   webapp:
-    image: "${DOCKER_HUB_IMAGE}"
+    image: "${dockerimage}"
     ports: 
     - 1010:80
     networks:
