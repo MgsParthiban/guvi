@@ -12,11 +12,11 @@ private_repo=$(echo "$dockerId/d2k")
 repo_name=$(echo "$image" | awk -F '/' '{ print $3}' | awk -F ':' '{print $1}')
 tag=$(echo "$image" | awk -F ':' '{print $2}')
 
-echo "this si the docker id: $image"
-echo "this si the docker id: $dockerId"
-echo "this si the docker id: $repo_name"
-echo "this si the docker id: $tag"
-echo "this si the docker id:$private_repo"
+echo "this si the docker id:" $image
+echo "this si the docker id:"$dockerId
+echo "this si the docker id:" $repo_name
+echo "this si the docker id:" $tag
+echo "this si the docker id:"$private_repo
 
 #echo "$PASSWORD" | docker login -u "$USERNAME" --password-stdin --debug
 
