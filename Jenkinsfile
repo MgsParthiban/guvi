@@ -22,5 +22,18 @@ pipeline {
                 }
             }
         }
+        stage('deploy Docker Image') {
+            steps {
+                script {
+                    sh '''
+                    # Provide the execute permission to the build script
+                    chmod +x dep.sh
+                    
+                    # Call the build.sh script with the image name
+                    ./dep.sh
+                    '''
+                }
+            }
+        }
     }
 }
