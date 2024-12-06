@@ -12,13 +12,15 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh '''
-                    # Provide the execute permission to the build script
-                    chmod +x bu.sh
-                    
-                    # Call the build.sh script with the image name
-                    ./bu.sh
-                    '''
+                    docker.withRegistry('https://index.docker.io/v1/', "docker-hub") {
+                        sh '''
+                        # Provide the execute permission to the build script
+                        chmod +x bu.sh
+                        
+                        # Call the build.sh script with the image name
+                        ./bu.sh
+                        '''
+                    }
                 }
             }
         }
