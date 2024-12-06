@@ -4,15 +4,18 @@ source ./secret.txt
 
 # Pull the Docker image and store the output
 Image_name=$dockerimage
+
+echo $Image_name
+
 # Extract the tag from the image name line
-image=$(echo "$Image_name" | grep -oE "[^ ]+:[^ ]+" | tail -n 1 | awk '{print }')
-
-dockerId=$(echo "$image" | awk -F '/' '{print $2}')
+#image=$(echo "$Image_name" | grep -oE "[^ ]+:[^ ]+" | tail -n 1 | awk '{print }')
+#echo $image
+dockerId=$(echo "$Image_name" | awk -F '/' '{print $2}')
 private_repo=$(echo "$dockerId/d2k")
-repo_name=$(echo "$image" | awk -F '/' '{ print $3}' | awk -F ':' '{print $1}')
-tag=$(echo "$image" | awk -F ':' '{print $2}')
+repo_name=$(echo "$Image_name" | awk -F '/' '{ print $3}' | awk -F ':' '{print $1}')
+tag=$(echo "$Image_name" | awk -F ':' '{print $2}')
 
-echo "this si the docker id:" $image
+#echo "this si the docker id:" $image
 echo "this si the docker id:"$dockerId
 echo "this si the docker id:" $repo_name
 echo "this si the docker id:" $tag
