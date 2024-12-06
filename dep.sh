@@ -3,8 +3,7 @@
 source ./secret.txt
 
 # Pull the Docker image and store the output
-Image_name=$(docker pull parthitk/task:4)
-
+Image_name=$dockerimage
 # Extract the tag from the image name line
 image=$(echo "$Image_name" | grep -oE "[^ ]+:[^ ]+" | tail -n 1 | awk '{print }')
 
@@ -37,4 +36,6 @@ echo "Dockercompose found in: $(pwd)"
 # Start the Docker Compose services
 docker-compose --env-file .env up -d
 
-docker tag 
+docker tag $image $private_repo:$tag
+
+docker push $private_repo:$tag
