@@ -13,4 +13,13 @@ echo $Image_name
 #image=$(echo "$Image_name" | grep -oE "[^ ]+:[^ ]+" | tail -n 1 | awk '{print }')
 #echo $image
 dockerId=$(echo "$Image_name" | awk -F '/' '{print $1}')
+prod_repo=$(echo "$dockerId/d2k")
+tag=$$(echo "$Image_name" | awk -F ':' '{print $2}'
+prod_repo_tag=$(echo "$prod_repo:$tag")
+
 echo "The dockerhub user Id is : $dockerId"
+echo "The dockerhub user prod rename is : $prod_repo"
+echo "The tag id is: $tag"
+echo "the provate registry: $prod_repo_tag"
+
+docker tag $Image_name $prod_repo_tag
