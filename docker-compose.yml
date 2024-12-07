@@ -1,6 +1,6 @@
 services:
   webapp:
-    image: "${dockerimage}"
+    image: "${prod_image}"
     ports: 
     - 1010:80
     networks:
