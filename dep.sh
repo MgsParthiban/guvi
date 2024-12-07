@@ -1,7 +1,8 @@
 #!/bin/bash
 
 source ./secret.txt
-
+echo "$PASSWORD"
+echo "$USERNAME" 
 source ./.env
 
 # Pull the Docker image and store the output
@@ -22,4 +23,8 @@ echo "The dockerhub user prod rename is : $prod_repo"
 echo "The tag id is: $tag"
 echo "the provate registry: $prod_repo_tag"
 
+echo "$PASSWORD" | docker login -u "$USERNAME" --password-stdin
+
+
 docker tag $Image_name $prod_repo_tag
+docker push $prod_repo_tag
