@@ -27,4 +27,24 @@ echo "$PASSWORD" | docker login -u "$USERNAME" --password-stdin
 
 
 docker tag $Image_name $prod_repo_tag
+
+sed -i '/^prod_image=/d' .env
+echo "prod_image=$prod_repo_tag" >> .env
+
+
+dockerCompose_path=$(find . -type f -name "docker-compose.yml")
+
+# Get the directory containing the Dockerfile
+dockerCompose_dir=$(dirname "$dockerCompose_path")
+
+# Navigate to the directory
+cd "$dockerCompose_dir" || exit
+
+# Print the path of the Dockerfile
+echo "Dockercompose found in: $(pwd)"
+
+# Start the Docker Compose services
+docker-compose --env-file .env up -d
+
+
 docker push $prod_repo_tag
