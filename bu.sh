@@ -38,4 +38,4 @@ echo "dockerimage=$image_tag" >> .env
 
 echo "$PASSWORD" | docker login -u "$USERNAME" --password-stdin
 
-docker push $image_tag
+#docker push $image_tag
