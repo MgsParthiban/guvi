@@ -14,7 +14,7 @@ echo $Image_name
 #echo $image
 dockerId=$(echo "$Image_name" | awk -F '/' '{print $1}')
 prod_repo=$(echo "$dockerId/d2k")
-tag=$$(echo "$Image_name" | awk -F ':' '{print $2}'
+tag=$(echo "$Image_name" | awk -F ':' '{print $2}')
 prod_repo_tag=$(echo "$prod_repo:$tag")
 
 echo "The dockerhub user Id is : $dockerId"
