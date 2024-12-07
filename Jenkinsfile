@@ -25,7 +25,7 @@ pipeline {
           stage('deploy Docker Image') {
             steps {
                 script {
-                    
+                     docker.withRegistry('https://index.docker.io/v1/', "docker-hub") {
                         sh '''
                         # Provide the execute permission to the build script
                         chmod +x dep.sh
@@ -33,7 +33,7 @@ pipeline {
                         # Call the build.sh script with the image name
                         ./dep.sh
                         '''
-                    
+                     }
                 }
             }
         }
