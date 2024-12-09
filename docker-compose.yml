@@ -2,7 +2,7 @@ services:
   webapp:
     image: "${prod_image}"
     ports: 
-    - 1010:80
+    - 1111:80
     networks:
       - guvi
     secrets:
