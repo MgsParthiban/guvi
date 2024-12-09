@@ -1,6 +1,9 @@
 pipeline {
     agent any
     environment {
+        DOCKER_HUB_CREDENTIALS = credentials('docker-hub')
+    }
+    environment {
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub') // Corrected credentials ID
        }
     stages {
@@ -12,6 +15,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
+                    docker.withRegistry('https://index.docker.io/v1/', "docker-hub") {
                         sh '''
                         # Provide the execute permission to the build script
                         chmod +x bu.sh
@@ -19,6 +23,7 @@ pipeline {
                         # Call the build.sh script with the image name
                         ./bu.sh
                         '''
+                    }
                 }
             }
         }
