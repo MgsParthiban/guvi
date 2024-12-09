@@ -1,9 +1,6 @@
 pipeline {
     agent any
     environment {
-        DOCKER_HUB_CREDENTIALS = credentials('docker-hub')
-    }
-    environment {
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub') // Corrected credentials ID
        }
     stages {
